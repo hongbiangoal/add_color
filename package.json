@@ -1,0 +1,11 @@
+{
+  "name": "four_color_go",
+  "version": "0.0.1",
+  "language": "zh",
+  "description": "four_color_go",
+  "author": "hongbiangoal",
+  "dependencies": {
+    "cheerio": "0.20.0",
+    "domhandler": "2.3.0"
+  }
+}

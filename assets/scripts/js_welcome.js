@@ -27,14 +27,20 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        playAudio: {
+            default: null,
+            url: cc.AudioClip
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        var self = this;
+        Global.currentColor = new cc.Color(255,0,0,255);
         this.node.on(cc.Node.EventType.TOUCH_END,function(){
+            cc.audioEngine.playEffect(self.playAudio, false);
             cc.director.loadScene("play_one");
-            console.log("---click ---");
         })
     },
 

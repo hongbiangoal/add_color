@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://www.cocos.com/docs/creator/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/life-cycle-callbacks/index.html
-
+var utils = require('./utils/CommonUtils');
 cc.Class({
     extends: cc.Component,
 
@@ -61,10 +61,10 @@ cc.Class({
         
         var sss = Global.currentColor;
         this.drawBike(0);
-        this.schedule(this.leftDraw1, 0.1,1);
-        this.schedule(this.leftDraw2, 0.2,1);
-        this.schedule(this.leftDraw3, 0.3,1);
-        this.schedule(this.leftDraw4, 0.4,1);
+        // this.schedule(this.leftDraw1, 0.1,1);
+        // this.schedule(this.leftDraw2, 0.2,1);
+        // this.schedule(this.leftDraw3, 0.3,1);
+        // this.schedule(this.leftDraw4, 0.4,1);
         // this.drawBike(1);
     },
 
@@ -75,8 +75,8 @@ cc.Class({
             
             console.log("---on ---"+event.getLocationX()+"---y="+event.getLocationY());
             //如果在圆内
-            if(self.checkRight(event.getLocation(),self.innerPositions)){
-                self.drawBike(0,Global.currentColor);
+            if(utils.isInner(event.getLocation(),self.innerPositions)){
+                self.drawBike(1,Global.currentColor);
                 self.innerColor = Global.currentColor;
                 self.isAllRight();
                 // if(!self.innerColor.equals(cc.Color.BLACK) && !self.outerColor1.equals(cc.Color.BLACK)
@@ -90,8 +90,8 @@ cc.Class({
                 //        console.log("----can gogogo------------------");
                 //        cc.director.loadScene("welcome");
                 //    }
-            }else if(self.checkRight(event.getLocation(),self.outerPositions1)){
-                self.drawBike(1,Global.currentColor);
+            }else if(utils.isInner(event.getLocation(),self.outerPositions1)){
+                self.drawBike(2,Global.currentColor);
                 self.outerColor1 = Global.currentColor;
                 self.isAllRight();
                 // if(!self.innerColor.equals(cc.Color.BLACK) && !self.outerColor1.equals(cc.Color.BLACK)
@@ -104,8 +104,8 @@ cc.Class({
                 //        console.log("----can gogogo------------------");
                 //        cc.director.loadScene("welcome");
                 //    }
-            }else if(self.checkRight(event.getLocation(),self.outerPositions2)){
-                self.drawBike(2,Global.currentColor);
+            }else if(utils.isInner(event.getLocation(),self.outerPositions2)){
+                self.drawBike(3,Global.currentColor);
                 self.outerColor2 = Global.currentColor;
                 self.isAllRight();
                 // if(!self.innerColor.equals(cc.Color.BLACK) && !self.outerColor1.equals(cc.Color.BLACK)
@@ -118,8 +118,8 @@ cc.Class({
                 //        console.log("----can gogogo------------------");
                 //        cc.director.loadScene("welcome");
                 //    }
-            }else if(self.checkRight(event.getLocation(),self.outerPositions3)){
-                self.drawBike(3,Global.currentColor);
+            }else if(utils.isInner(event.getLocation(),self.outerPositions3)){
+                self.drawBike(4,Global.currentColor);
                 self.outerColor3 = Global.currentColor;
                 self.isAllRight();
                 // if(!self.innerColor.equals(cc.Color.BLACK) && !self.outerColor1.equals(cc.Color.BLACK)
@@ -132,8 +132,8 @@ cc.Class({
                 //        console.log("----can gogogo------------------");
                 //        cc.director.loadScene("welcome");
                 //    }
-            }else if(self.checkRight(event.getLocation(),self.outerPositions4)){
-                self.drawBike(4,Global.currentColor);
+            }else if(utils.isInner(event.getLocation(),self.outerPositions4)){
+                self.drawBike(5,Global.currentColor);
                 self.outerColor4 = Global.currentColor;
                 self.isAllRight();
                 // if(!self.innerColor.equals(cc.Color.BLACK) && !self.outerColor1.equals(cc.Color.BLACK)
@@ -173,7 +173,7 @@ cc.Class({
            && !this.outerColor1.equals(this.outerColor4)
            && !this.outerColor2.equals(this.outerColor3)
            && !this.outerColor4.equals(this.outerColor3)){
-            cc.director.loadScene("welcome");
+            cc.director.loadScene("play_three");
            }
     },
     drawBike: function (i,color) {
@@ -182,6 +182,7 @@ cc.Class({
 
         // let pathStrings = ['M30.695,60.841 C30.695,60.841 22.536,74.203 8.537,67.203 C-1.234,62.317 -2.748,46.789 9.105,39.593 C25.013,29.934 37.398,56.183 31.035,55.387', 'M24.672,54.591 C24.672,54.591 15.81,54.705 18.195,50.159 C20.58,45.615 26.263,35.274 32.853,33.457 C39.443,31.639 56.733,31.306 54.895,34.593 C52.737,38.456 36.715,59.477 37.17,54.931 C37.624,50.387 48.305,29.822 42.056,27.207 C35.806,24.593 23.875,25.389 21.83,20.162 C19.784,14.935 28.207,3.159 39.669,4.709 C52.281,6.413 51.146,10.959 54.668,14.254 C58.19,17.55 66.144,11.3 61.826,5.504 C57.508,-0.289 49.894,-2.45 50.236,6.527 C50.578,15.504 47.396,28.003 52.281,28.684 C57.167,29.366 66.824,31.183 68.302,27.547 C69.779,23.911 60.803,21.07 60.12,32.775 C59.438,44.478 67.507,33.002 76.597,44.023 C85.687,55.044 78.626,66.354 69.779,69.134 C61.826,71.634 54.195,66.827 50.804,60.044 C46.031,50.499 55.12,29.706 64.894,54.249'];
         let pathStrings = [
+            'M0,-20 C11.04,-20 20,-11.04 20,0 C20,11.05 11.05,20 0,20 C-11.04,20 -20,11.04 -20,0 C-20,-11.04 -11.04,-20 0,-20 M0,-20 C11.04,-20 20,-11.04 20,0 L20,0 40,0 C40,-22.08 22.08,-40 0,-40 L0,-40 0,-20 M20,0 C20,11.04 11.04,20 0,20 L0,20 0,40 C22.08,40 40,22.08 40,0 L40,0 20,0 M0,20 C-11.04,20 -20,11.04 -20,0 L-20,0 -40,0 C-40,22.08 -22.08,40 0,40 L0,40 0,20 M-20,0 C-20,-11.04 -11.04,-20 0,-20 L0,-20 0,-40 C-22.08,-40 -40,-22.08 -40,0 L-40,0 -20,0',
         'M0,-20 C11.04,-20 20,-11.04 20,0 C20,11.05 11.05,20 0,20 C-11.04,20 -20,11.04 -20,0 C-20,-11.04 -11.04,-20 0,-20',
         'M0,-20 C11.04,-20 20,-11.04 20,0 L20,0 40,0 C40,-22.08 22.08,-40 0,-40 L0,-40 0,-20',
         'M0,-20 C11.04,-20 20,-11.04 20,0 L20,0 40,0 C40,-22.08 22.08,-40 0,-40 L0,-40 0,-20',
@@ -197,7 +198,7 @@ cc.Class({
             // var path = group.addPath();
             let path = self.addComponent('R.path');
             console.log("--------------------2-----"+i);
-            path.strokeColor = cc.Color.BLACK;
+            path.strokeColor = "#5E5D5A";
             path.lineWidth = 2;
             if(color !== undefined){
                 path.fillColor = color;
@@ -215,16 +216,18 @@ cc.Class({
 
             if(i===0){
                 path.center(0, 0);
-            }else if(i===1){
+            }if(i===1){
+                path.center(0, 0);
+            }else if(i===2){
                 path.rotation = 90;
                 path.center(80, -80);
-            }else if(i===2){
+            }else if(i===3){
                 path.rotation = 0;
                 path.center(80, 80);
-            }else if(i===3){
+            }else if(i===4){
                 path.rotation = -90;
                 path.center(-80, 80);
-            }else if(i===4){
+            }else if(i===5){
                 path.rotation = 180;
                 path.center(-80, -80);
             }
@@ -256,46 +259,4 @@ cc.Class({
     leftDraw4: function(){
         this.drawBike(4);
     },
-    /**
-    * @description 射线法判断点是否在多边形内部
-    * @param {Object} p 待判断的点，格式：{ x: X坐标, y: Y坐标 }
-    * @param {Array} poly 多边形顶点，数组成员的格式同 p
-    * @return {String} 点 p 和多边形 poly 的几何关系
-    */
-    checkRight: function (p, poly) {
-        var px = p.x,
-            py = p.y,
-            flag = false
-        console.log("------"+poly);
-        for (var i = 0, l = poly.length, j = l - 1; i < l; j = i, i++) {
-            var sx = poly[i].x,
-                sy = poly[i].y,
-                tx = poly[j].x,
-                ty = poly[j].y
-
-            // 点与多边形顶点重合
-            if ((sx === px && sy === py) || (tx === px && ty === py)) {
-                return true;
-            }
-
-            // 判断线段两端点是否在射线两侧
-            if ((sy < py && ty >= py) || (sy >= py && ty < py)) {
-                // 线段上与射线 Y 坐标相同的点的 X 坐标
-                var x = sx + (py - sy) * (tx - sx) / (ty - sy)
-
-                // 点在多边形的边上
-                if (x === px) {
-                    return true;
-                }
-
-                // 射线穿过多边形的边界
-                if (x > px) {
-                    flag = !flag
-                }
-            }
-        }
-
-        // 射线穿过多边形边界的次数为奇数时点在多边形内
-        return flag
-    }
 });

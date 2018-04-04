@@ -33,6 +33,8 @@ cc.Class({
 
     onLoad () {
         this.drawCar(0);
+        this.schedule(this.drawCar1, 0.1,1);
+        this.schedule(this.drawCar0, 1,1);
     },
 
     start () {
@@ -55,7 +57,8 @@ cc.Class({
 
         
         
-        let pathStrings = ['M-19,-5 L-12,-5 a1,1 0,0 0,1 -1 L-15,-19 a1,1 0,0 0,-1 -1 L-19,-20 a1,1 0,0 0,-1 1 L-20,-6 a1,1 0,0 0,1 1'
+        let pathStrings = ['M-19,-5 L-12,-5 a1,1 0,0 0,1 -1 L-15,-19 a1,1 0,0 0,-1 -1 L-19,-20 a1,1 0,0 0,-1 1 L-20,-6 a1,1 0,0 0,1 1',
+        'M-12,-9 a3,3  0,1 1,0 6 a3,3  0,1 1,0 -6'
         ];
             // let i = 0;
         let self = this;
@@ -72,6 +75,11 @@ cc.Class({
             if(color !== undefined){
                 path.fillColor = color;
             }
+            if(i%2 === 0){
+                path.fillColor = '#0000FF';
+            }else{
+                path.fillColor = '#00FF00';
+            }
             // path.fillColor = '#0000FF';
             // path.showHandles = true;
             console.log("---------------------1----"+self.path+"--"+path);
@@ -86,9 +94,9 @@ cc.Class({
             if(i===0){
                 path.center(0, 0);
             }else if(i===1){
-                path.center(40, 0);
+                path.center(0, 0);
             }else if(i===2){
-                path.center(-40, 0);
+                path.center(0, 0);
             }
             
 
@@ -105,4 +113,11 @@ cc.Class({
         // this.schedule(animate, 1,1);
 
     },
+
+    drawCar1: function (){
+        this.drawCar(1);
+    },
+    drawCar0: function (){
+        this.drawCar(0);
+    }
 });
